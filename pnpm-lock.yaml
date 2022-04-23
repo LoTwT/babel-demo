@@ -24,16 +24,20 @@ importers:
     specifiers:
       '@babel/generator': ^7.17.9
       '@babel/parser': ^7.17.9
+      '@babel/template': ^7.16.7
       '@babel/traverse': ^7.17.9
       '@babel/types': ^7.17.0
       '@types/babel__generator': ^7.6.4
+      '@types/babel__template': ^7.4.1
       '@types/babel__traverse': ^7.17.0
     devDependencies:
       '@babel/generator': 7.17.9
       '@babel/parser': 7.17.9
+      '@babel/template': 7.16.7
       '@babel/traverse': 7.17.9
       '@babel/types': 7.17.0
       '@types/babel__generator': 7.6.4
+      '@types/babel__template': 7.4.1
       '@types/babel__traverse': 7.17.0
 
 packages:
@@ -153,6 +157,13 @@ packages:
   /@types/babel__generator/7.6.4:
     resolution: {integrity: sha512-tFkciB9j2K755yrTALxD44McOrk+gfpIpvC3sxHjRawj6PfnQxrse4Clq5y/Rq+G3mrBurMax/lG8Qn2t9mSsg==}
     dependencies:
+      '@babel/types': 7.17.0
+    dev: true
+
+  /@types/babel__template/7.4.1:
+    resolution: {integrity: sha512-azBFKemX6kMg5Io+/rdGT0dkGreboUVR0Cdm3fz9QJWpaQGJRQXl7C+6hOTCZcMll7KFyEQpgbYI2lHdsS4U7g==}
+    dependencies:
+      '@babel/parser': 7.17.9
       '@babel/types': 7.17.0
     dev: true
 
