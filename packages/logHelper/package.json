@@ -1,0 +1,29 @@
+{
+  "name": "loghelper",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LoTwT/babel-demo.git",
+    "directory": "packages/logHelper"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LoTwT/babel-demo/issues"
+  },
+  "homepage": "https://github.com/LoTwT/babel-demo#readme",
+  "devDependencies": {
+    "@babel/generator": "^7.17.9",
+    "@babel/parser": "^7.17.9",
+    "@babel/traverse": "^7.17.9",
+    "@babel/types": "^7.17.0",
+    "@types/babel__generator": "^7.6.4",
+    "@types/babel__traverse": "^7.17.0"
+  }
+}
