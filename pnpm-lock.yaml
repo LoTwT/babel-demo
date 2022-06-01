@@ -20,6 +20,12 @@ importers:
       unplugin-auto-import: 0.8.6
       vitest: 0.13.1
 
+  packages/acorn-parser:
+    specifiers:
+      acorn: ^8.7.1
+    dependencies:
+      acorn: 8.7.1
+
   packages/logHelper:
     specifiers:
       '@babel/core': ^7.18.2
@@ -355,7 +361,6 @@ packages:
     resolution: {integrity: sha512-Xx54uLJQZ19lKygFXOWsscKUbsBZW0CPykPhVQdhIeIwrbPmJzqeASDInc8nKBnp/JT6igTs82qPXz069H8I/A==}
     engines: {node: '>=0.4.0'}
     hasBin: true
-    dev: true
 
   /aggregate-error/3.1.0:
     resolution: {integrity: sha512-4I7Td01quW/RpocfNayFdFVk1qSuoh0E7JrbRJ16nH01HhKFQ88INq9Sd+nd72zqRySlr9BmDA8xlEJ6vJMrYA==}
