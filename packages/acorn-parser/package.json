@@ -19,6 +19,6 @@
   },
   "homepage": "https://github.com/LoTwT/babel-demo#readme",
   "dependencies": {
-    "acorn": "^8.7.1"
+    "acorn": "^8.8.0"
   }
 }
