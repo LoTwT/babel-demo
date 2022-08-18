@@ -4,6 +4,8 @@ const path = require("node:path")
 const generate = require("@babel/generator").default
 
 let intlIndex = 0
+
+// 生成 intl source 文件的唯一 key
 function nextIntlKey() {
   ++intlIndex
   return `intl${intlIndex}`
@@ -16,6 +18,7 @@ const autoI18nPlugin = declare((api, options, dirname) => {
     throw new Error("outputDir is empty")
   }
 
+  // 生成指定替换节点
   function getReplaceExpression(path, value, intlUid) {
     const expressionParams = path.isTemplateLiteral()
       ? path.node.expressions.map((item) => generate(item).code)
@@ -27,6 +30,8 @@ const autoI18nPlugin = declare((api, options, dirname) => {
       })`,
     ).expression
 
+    // 要判断是否在 jsxAttribute 下，如果是，需要包裹在 jsxExpressionContainer 节点中 ( 即 {} )
+    // 如果是模板字符串字面量 ( TemplateLiteral ) ，还要把 expressions 作为参数传入
     if (
       path.findParent((p) => p.isJSXAttribute()) &&
       !path.findParent((p) => p.isJSXExpressionContainer())
@@ -37,6 +42,9 @@ const autoI18nPlugin = declare((api, options, dirname) => {
     return replaceExpression
   }
 
+  // 收集要替换的 key value，保存到 file 中
+  // 在 pre 阶段初始化
+  // 在 post 阶段取出，用于生成 resource 文件，生成位置通过插件的 outputDir 传入
   function save(file, key, value) {
     const allText = file.get("allText")
     allText.push({
@@ -52,16 +60,19 @@ const autoI18nPlugin = declare((api, options, dirname) => {
     },
     visitor: {
       Program: {
+        // 文件进入时判断是否导入国际化相关的库
         enter(path, state) {
           let imported
 
           path.traverse({
             ImportDeclaration(p) {
               const source = p.node.source.value
+              // 如果导入了，打标记
               if (source === "intl") imported = true
             },
           })
 
+          // 未导入，添加导入
           if (!imported) {
             const uid = path.scope.generateUid("intl")
             const importAst = api.template.ast(`import ${uid} from "intl"`)
@@ -69,6 +80,8 @@ const autoI18nPlugin = declare((api, options, dirname) => {
             state.intlUid = uid
           }
 
+          // 把打了 i18n-disable 标记注释的字符串和模板字符串打标记
+          // 跳过处理打了标记的节点
           path.traverse({
             "StringLiteral|TemplateLiteral"(path) {
               if (path.node.leadingComments) {
@@ -90,6 +103,9 @@ const autoI18nPlugin = declare((api, options, dirname) => {
           })
         },
       },
+      // StringLiteral 、 TemplateLiteral
+      // 用 state.intlUid + ".t" 的函数调用语句替换原节点
+      // 替换完后，要用 path.skip 跳过新生成节点的处理，防止死循环
       StringLiteral(path, state) {
         if (path.node.skipTransform) return
 
