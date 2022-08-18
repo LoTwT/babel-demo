@@ -74,6 +74,28 @@ importers:
       '@babel/types': 7.18.10
       fs-extra: 10.1.0
 
+  packages/auto-i18n-2:
+    specifiers:
+      '@babel/core': ^7.18.10
+      '@babel/generator': ^7.18.12
+      '@babel/helper-module-imports': ^7.18.6
+      '@babel/helper-plugin-utils': ^7.18.9
+      '@babel/parser': ^7.18.11
+      '@babel/template': ^7.18.10
+      '@babel/traverse': ^7.18.11
+      '@babel/types': ^7.18.10
+      fs-extra: ^10.1.0
+    dependencies:
+      '@babel/core': 7.18.10
+      '@babel/generator': 7.18.12
+      '@babel/helper-module-imports': 7.18.6
+      '@babel/helper-plugin-utils': 7.18.9
+      '@babel/parser': 7.18.11
+      '@babel/template': 7.18.10
+      '@babel/traverse': 7.18.11
+      '@babel/types': 7.18.10
+      fs-extra: 10.1.0
+
   packages/auto-track:
     specifiers:
       '@babel/core': ^7.18.10
