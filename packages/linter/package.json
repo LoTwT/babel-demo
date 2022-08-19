@@ -1,0 +1,31 @@
+{
+  "name": "linter",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LoTwT/babel-demo.git",
+    "directory": "packages/linter"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LoTwT/babel-demo/issues"
+  },
+  "homepage": "https://github.com/LoTwT/babel-demo#readme",
+  "dependencies": {
+    "@babel/core": "^7.18.10",
+    "@babel/generator": "^7.18.12",
+    "@babel/helper-plugin-utils": "^7.18.9",
+    "@babel/parser": "^7.18.11",
+    "@babel/template": "^7.18.10",
+    "@babel/traverse": "^7.18.11",
+    "@babel/types": "^7.18.10",
+    "babel-plugin-tester": "^10.1.0"
+  }
+}
