@@ -4,6 +4,7 @@ const fse = require("fs-extra")
 const path = require("node:path")
 const renderer = require("./renderer")
 
+// 用 doctrine 解析注释信息
 function parseComment(commentStr) {
   if (!commentStr) return null
   return doctrine.parse(commentStr, { unwrap: true })
@@ -28,6 +29,7 @@ function generate(docs, format = "json") {
   }
 }
 
+// path.getTypeAnnotation() 取到的类型需要做进一步处理，使其更易读
 function resolveType(tsType) {
   switch (tsType.type) {
     case "TSStringKeyword":
@@ -46,9 +48,11 @@ const autoDocumentPlugin = declare((api, options, dirname) => {
 
   return {
     pre(file) {
+      // 全局 file 对象中添加一个 docs 数组，用于收集信息
       file.set("docs", [])
     },
     visitor: {
+      // 拿到函数的各种信息
       FunctionDeclaration(path, state) {
         const docs = state.file.get("docs")
         docs.push({
@@ -65,6 +69,8 @@ const autoDocumentPlugin = declare((api, options, dirname) => {
         })
         state.file.set("docs", docs)
       },
+      // 拿到类的各种信息
+      // 构造函数
       ClassDeclaration(path, state) {
         const docs = state.file.get("docs")
         const classInfo = {
@@ -81,6 +87,7 @@ const autoDocumentPlugin = declare((api, options, dirname) => {
         }
 
         path.traverse({
+          // 属性
           ClassProperty(path) {
             classInfo.propertiesInfo.push({
               name: path.get("key").toString(),
@@ -91,6 +98,7 @@ const autoDocumentPlugin = declare((api, options, dirname) => {
                 .filter(Boolean),
             })
           },
+          // 方法
           ClassMethod(path) {
             if (path.node.kind === "constructor") {
               classInfo.constructorInfo = {
@@ -118,7 +126,9 @@ const autoDocumentPlugin = declare((api, options, dirname) => {
       },
     },
     post(file) {
+      // 文档生成
       const docs = file.get("docs")
+      // 根据插件参数的 format 使用不同的 renderer 渲染
       const res = generate(docs, options.format)
 
       fse.ensureDirSync(options.outputDir)
